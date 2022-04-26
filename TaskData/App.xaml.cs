@@ -25,6 +25,15 @@ namespace TaskData
             return Container.Resolve<MainView>();
         }
 
+        //登录验证
+        protected override void OnInitialized()
+        {
+            var service = App.Current.MainWindow.DataContext as IConfigureService;
+            if (service != null)
+                service.Configure();
+            base.OnInitialized();
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.GetContainer()
@@ -34,7 +43,7 @@ namespace TaskData
             containerRegistry.Register<IToDoService, ToDoService>();
 
             containerRegistry.Register<IDialogHostService, DialogHostService>();
-
+            containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
             containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
             containerRegistry.RegisterForNavigation<ToDoView, ToDoViewModel>();

@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Ioc;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,17 +34,15 @@ namespace TaskData.ViewModels
         {
             try
             {
-                var dialogResult = await dialogHost.Question("温馨提示", $"确认删除待办事项:{obj.taskNo} ?");
+                var dialogResult = await dialogHost.Question("温馨提示", $"确认查看任务:{obj.taskNo} ?");
                 if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
 
                 UpdateLoading(true);
-                var deleteResult = await service.ActionStuTaskNO(obj.);
-                if (deleteResult.Status)
-                {
-                    var model = ToDoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
-                    if (model != null)
-                        ToDoDtos.Remove(model);
-                }
+                //var deleteResult = await service.ActionStuTaskNO(obj.subTaskNo);
+                //if (deleteResult!=null)
+                //{
+                //    await dialogHost.Question("温馨提示", $"{obj.subTaskNo}子任务已强制结束！");
+                //}
             }
             finally
             {
@@ -51,15 +50,7 @@ namespace TaskData.ViewModels
             }
         }
 
-        private void Execute(string obj)
-        {
-            switch (obj)
-            {
-                case "新增": Add(); break;
-                case "查询": GetDataAsync(); break;
-                case "保存": Save(); break;
-            }
-        }
+       
 
         private int selectedIndex;
 
@@ -94,94 +85,6 @@ namespace TaskData.ViewModels
             get { return isRightDrawerOpen; }
             set { isRightDrawerOpen = value; RaisePropertyChanged(); }
         }
-
-        private ToDoDto currentDto;
-
-        /// <summary>
-        /// 编辑选中/新增时对象
-        /// </summary>
-        public ToDoDto CurrentDto
-        {
-            get { return currentDto; }
-            set { currentDto = value; RaisePropertyChanged(); }
-        }
-
-        /// <summary>
-        /// 添加待办
-        /// </summary>
-        private void Add()
-        {
-            CurrentDto = new ToDoDto();
-            IsRightDrawerOpen = true;
-        }
-
-        private async void Selected(ToDoDto obj)
-        {
-            try
-            {
-                UpdateLoading(true);
-                var todoResult = await service.GetFirstOfDefaultAsync(obj.Id);
-                if (todoResult.Status)
-                {
-                    CurrentDto = todoResult.Result;
-                    IsRightDrawerOpen = true;
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                UpdateLoading(false);
-            }
-        }
-
-        private async void Save()
-        {
-            if (string.IsNullOrWhiteSpace(CurrentDto.Title) ||
-                string.IsNullOrWhiteSpace(CurrentDto.Content))
-                return;
-
-            UpdateLoading(true);
-
-            try
-            {
-                if (CurrentDto.Id > 0)
-                {
-                    var updateResult = await service.get(CurrentDto);
-                    if (updateResult.Status)
-                    {
-                        var todo = ToDoDtos.FirstOrDefault(t => t.Id == CurrentDto.Id);
-                        if (todo != null)
-                        {
-                            todo.Title = CurrentDto.Title;
-                            todo.Content = CurrentDto.Content;
-                            todo.Status = CurrentDto.Status;
-                        }
-                    }
-                    IsRightDrawerOpen = false;
-                }
-                else
-                {
-                    var addResult = await service.AddAsync(CurrentDto);
-                    if (addResult.Status)
-                    {
-                        ToDoDtos.Add(addResult.Result);
-                        IsRightDrawerOpen = false;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                UpdateLoading(false);
-            }
-        }
-
         public DelegateCommand<string> ExecuteCommand { get; private set; }
         public DelegateCommand<TaskViewDto> SelectedCommand { get; private set; }
         public DelegateCommand<TaskViewDto> DeleteCommand { get; private set; }
@@ -202,24 +105,15 @@ namespace TaskData.ViewModels
         {
             UpdateLoading(true);
 
-            int? Status = SelectedIndex == 0 ? null : SelectedIndex == 2 ? 1 : 0;
+            var todoResult = await service.GetAllFilterAsync<TaskViewDto>();
 
-            var todoResult = await service.GetAllFilterAsync(new ToDoParameter()
-            {
-                PageIndex = 0,
-                PageSize = 100,
-                Search = Search,
-                Status = Status
-            });
-
-            if (todoResult.Status)
-            {
+           
                 ToDoDtos.Clear();
-                foreach (var item in todoResult.Result.Items)
+                foreach (var item in todoResult)
                 {
                     ToDoDtos.Add(item);
                 }
-            }
+            
             UpdateLoading(false);
         }
 

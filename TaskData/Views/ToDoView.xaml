@@ -4,7 +4,175 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TaskData.Views"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:cv="clr-namespace:TaskData.Common.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-   
+
+    <UserControl.Resources>
+        <cv:IntToVisibilityConveter x:Key="IntToVisibility"/>
+    </UserControl.Resources>
+    <md:DialogHost>
+        <md:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
+            <md:DrawerHost.RightDrawerContent>
+                <DockPanel Width="300" LastChildFill="False">
+                    <TextBlock
+                        Padding="20,10"
+                        DockPanel.Dock="Top"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="子任务信息" />
+
+                    <StackPanel
+                        Margin="20"
+                        DockPanel.Dock="Top"
+                        Orientation="Horizontal">
+
+                    </StackPanel>
+                    <TextBox Text="{Binding SubTaskViewDto.subTaskNo}"
+                        Margin="20,0"
+                        md:HintAssist.Hint="请输入待办概要"
+                        DockPanel.Dock="Top" />
+                    <TextBox  Text="{Binding SubTaskViewDto.equipmentNo}"
+                        MinHeight="100"
+                        Margin="20"
+                        md:HintAssist.Hint="请输入待办内容"
+                        DockPanel.Dock="Top" />
+                </DockPanel>
+            </md:DrawerHost.RightDrawerContent>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1" VerticalAlignment="Center"
+                            Visibility="{Binding ToDoDtos.Count,Converter={StaticResource IntToVisibility}}"
+                            >
+                    <Image Source="/Images/wind.png" Width="120" Height="120"/>
+                    <TextBlock  Margin="0,10" FontSize="18"
+                        HorizontalAlignment="Center"
+                        Text="子任务读取中"/>
+                </StackPanel>
+
+                <ScrollViewer Grid.Row="1">
+                    <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding ToDoDtos}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn}">
+                                    <Grid
+                                        Width="280"
+                                        MinHeight="145"
+                                        MaxHeight="220"
+                                        Margin="8">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction 
+                                                    CommandParameter="{Binding}"
+                                                    Command="{Binding DataContext.SelectedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition  />
+                                        </Grid.RowDefinitions>
+
+                                        <md:PopupBox HorizontalAlignment="Right" Panel.ZIndex="1">
+                                            <Button Content="查看子任务" 
+                                                    CommandParameter="{Binding}"
+                                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}"
+                                                    />
+                                        </md:PopupBox>
+
+                                        <!--<Border  
+                                            Grid.RowSpan="2"    
+                                            CornerRadius="3">
+                                          
+                                        </Border>-->
+                                        <TextBlock  Padding="5" Text="主任务号："/>
+                                        <TextBlock
+                                            Padding="65,5"
+                                            FontWeight="Black"
+                                            Text="{Binding taskNo}" />
+                                        <TextBlock  Grid.Row="1" Padding="5,5" Text="起点区域："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,5"
+                                            Text="{Binding sourceArea}" />
+                                        <TextBlock  Grid.Row="1" Padding="8,30" Text="起点："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,30"
+                                            Text="{Binding source}" />
+
+                                        <TextBlock  Grid.Row="1" Padding="7,50" Text="终点区域："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,52"
+                                            Text="{Binding areaNo}" />
+                                        <TextBlock  Grid.Row="1" Padding="7,70" Text="终点："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,70"
+                                            Text="{Binding destination}" />
+                                        <TextBlock  Grid.Row="1" Padding="7,85" Text="任务类型："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,85"
+                                            Text="{Binding taskType}" />
+                                        <TextBlock  Grid.Row="1" Padding="7,100" Text="箱号："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,100"
+                                            Text="{Binding uniqueNo}" />
+                                        <TextBlock  Grid.Row="1" Padding="7,115" Text="任务状态："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,115"
+                                            Text="{Binding status}" />
+                                        <TextBlock  Grid.Row="1" Padding="7,130" Text="创建时间："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,130"
+                                            Text="{Binding createDate}" />
+                                        <TextBlock  Grid.Row="1" Padding="7,145" Text="更新时间："/>
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Padding="65,145"
+                                            Text="{Binding updateDate}" />
+
+                                        <Canvas Grid.RowSpan="2" ClipToBounds="True">
+                                            <Border
+                                                Canvas.Top="10"
+                                                Canvas.Right="-50"
+                                                Width="120"
+                                                Height="120"
+                                                Background="#FFFFFF"
+                                                CornerRadius="100"
+                                                Opacity="0.1" />
+                                            <Border
+                                                Canvas.Top="80"
+                                                Canvas.Right="-30"
+                                                Width="120"
+                                                Height="120"
+                                                Background="#FFFFFF"
+                                                CornerRadius="100"
+                                                Opacity="0.1" />
+                                        </Canvas>
+                                    </Grid>
+                                </md:TransitioningContent>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </md:DrawerHost>
+    </md:DialogHost>
 </UserControl>

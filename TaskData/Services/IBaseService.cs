@@ -14,7 +14,7 @@ namespace TaskData.Services
     /// <typeparam name="TEntity"></typeparam>
    public interface IBaseService<TEntity> where TEntity : class
     {
-        Task<ApiResponse<TEntity>> ActionStuTaskNO(TEntity entity);
+        Task<ApiResponse<TEntity>> ActionStuTaskNO(string entity);
         Task<ApiResponse<TEntity>> ActionCaerNO(TEntity entity);
 
         //Task<ApiResponse<TEntity>> UpdateAsync(TEntity entity);

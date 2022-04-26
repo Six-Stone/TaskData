@@ -41,7 +41,7 @@ namespace TaskData.ViewModels
             });
             this.containerProvider = containerProvider;
             this.regionManager = regionManager;
-            CreateMenuBar();
+            
         }
 
         private ObservableCollection<MenuBar> menuBars;
@@ -79,8 +79,8 @@ namespace TaskData.ViewModels
         }
         public void Configure()
         {
-            //CreateMenuBar();
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
+            CreateMenuBar();
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("ToDoView");
         }
        
     }

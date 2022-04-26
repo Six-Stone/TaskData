@@ -18,11 +18,11 @@ namespace TaskData.Services
             this.serviceName = serviceName;
         }
         //强制完成子任务
-        public async Task<ApiResponse<TEntity>> ActionStuTaskNO(TEntity entity)
+        public async Task<ApiResponse<TEntity>> ActionStuTaskNO(string entity)
         {
             BaseRequest request = new();
             request.Method = RestSharp.Method.POST;
-            request.Route = $"api/{serviceName}/ForceFinishSubTask";
+            request.Route = $"api/{serviceName}/ForceFinishSubTask?subTaskNo={entity}";
             request.Parameter = entity;
             return await client.ExecuteAsync<TEntity>(request);
         }
