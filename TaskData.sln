@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskData", "TaskData\TaskData.csproj", "{4C91E0C3-4E71-4D34-A235-B42DAB50391F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TackNo.Shared", "TackNo.Shared\TackNo.Shared.csproj", "{C913B11B-947B-4AFD-BB03-EEC12D9D3674}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TackNo.Shared", "TackNo.Shared\TackNo.Shared.csproj", "{C913B11B-947B-4AFD-BB03-EEC12D9D3674}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

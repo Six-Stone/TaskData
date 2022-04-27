@@ -121,7 +121,7 @@
                         FontSize="20"
                         FontWeight="Bold"
                         Text="主任务显示" />
-                    <Button  Command="{Binding ExecuteCommand}"
+                    <!--<Button  Command="{Binding ExecuteCommand}"
                              CommandParameter="新增待办"
                         Width="30"
                         Height="30" 
@@ -129,7 +129,7 @@
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                         <materialDesign:PackIcon Kind="Add" />
-                    </Button>
+                    </Button>-->
                 </DockPanel>
 
                 <ListBox x:Name="todoList"
@@ -186,7 +186,7 @@
                         FontSize="20"
                         FontWeight="Bold"
                         Text="子任务显示" />
-                    <Button
+                    <!--<Button
                         Width="30"
                         Height="30"
                         Command="{Binding ExecuteCommand}"
@@ -195,7 +195,7 @@
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                         <materialDesign:PackIcon Kind="Add" />
-                    </Button>
+                    </Button>-->
                 </DockPanel>
 
                 <ListBox

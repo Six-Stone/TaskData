@@ -10,37 +10,113 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    
     <UserControl.Resources>
         <cv:IntToVisibilityConveter x:Key="IntToVisibility"/>
     </UserControl.Resources>
-    <md:DialogHost>
+    
+    <md:DialogHost >
+
         <md:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
+
+          
             <md:DrawerHost.RightDrawerContent>
-                <DockPanel Width="300" LastChildFill="False">
-                    <TextBlock
-                        Padding="20,10"
-                        DockPanel.Dock="Top"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        Text="子任务信息" />
 
-                    <StackPanel
-                        Margin="20"
-                        DockPanel.Dock="Top"
-                        Orientation="Horizontal">
 
-                    </StackPanel>
-                    <TextBox Text="{Binding SubTaskViewDto.subTaskNo}"
-                        Margin="20,0"
-                        md:HintAssist.Hint="请输入待办概要"
-                        DockPanel.Dock="Top" />
-                    <TextBox  Text="{Binding SubTaskViewDto.equipmentNo}"
-                        MinHeight="100"
-                        Margin="20"
-                        md:HintAssist.Hint="请输入待办内容"
-                        DockPanel.Dock="Top" />
+                <DockPanel Width="250" LastChildFill="False" >
+                    <Grid>
+                        <ScrollViewer Grid.Row="1">
+                            <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding SubTask}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn}">
+                                            <Grid Width="240"
+                                                  MinHeight="150"
+                                                  MaxHeight="180"
+                                                  Margin="8">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <md:PopupBox HorizontalAlignment="Left" Panel.ZIndex="1">
+                                                    <Button Content="操作" 
+                                                    CommandParameter="{Binding}"
+                                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}"
+                                                    />
+                                                </md:PopupBox>
+                                                <TextBlock  Padding="25,5,0,0" Text="子任务号："/>
+                                                <TextBlock
+                                                Padding="85,5"
+                                                FontWeight="Black"
+                                                Text="{Binding subTaskNo}" />
+                                                <TextBlock  Grid.Row="1" Padding="25,1" Text="设备号："/>
+                                                <TextBlock
+                                                Padding="85,1"
+                                                Grid.Row="1"
+                                                FontWeight="Black"
+                                                Text="{Binding equipmentNo}" />
+                                                <TextBlock  Grid.Row="1" Padding="25,20" Text="起点："/>
+                                                <TextBlock
+                                                Padding="85,20"
+                                                Grid.Row="1"
+                                                FontWeight="Black"
+                                                Text="{Binding source}" />
+                                                <TextBlock  Grid.Row="1" Padding="25,37" Text="终点："/>
+                                                <TextBlock
+                                                Padding="85,37"
+                                                Grid.Row="1"
+                                                FontWeight="Black"
+                                                Text="{Binding destination}" />
+                                                <TextBlock  Grid.Row="1" Padding="25,53" Text="小车号："/>
+                                                <TextBlock
+                                                Padding="85,53"
+                                                Grid.Row="1"
+                                                FontWeight="Black"
+                                                Text="{Binding carNo}" />
+                                                <TextBlock  Grid.Row="1" Padding="25,67" Text="小车号："/>
+                                                <TextBlock
+                                                Padding="85,67"
+                                                Grid.Row="1"
+                                                FontWeight="Black"
+                                                Text="{Binding status}" />
+                                                
+                                                
+                                                <Canvas Grid.RowSpan="2" ClipToBounds="True">
+                                                <Border
+                                                Canvas.Top="10"
+                                                Canvas.Right="-50"
+                                                Width="120"
+                                                Height="120"
+                                                Background="BlanchedAlmond"
+                                                CornerRadius="100"
+                                                Opacity="0.1" />
+                                                <Border
+                                                Canvas.Top="80"
+                                                Canvas.Right="-30"
+                                                Width="120"
+                                                Height="120"
+                                                Background="#FFFFFF"
+                                                CornerRadius="100"
+                                                Opacity="0.1" />
+                                                </Canvas>
+                                            </Grid>
+                                        </md:TransitioningContent>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                    
                 </DockPanel>
+                
             </md:DrawerHost.RightDrawerContent>
+            
+            
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -83,19 +159,6 @@
                                             <RowDefinition Height="auto" />
                                             <RowDefinition  />
                                         </Grid.RowDefinitions>
-
-                                        <md:PopupBox HorizontalAlignment="Right" Panel.ZIndex="1">
-                                            <Button Content="查看子任务" 
-                                                    CommandParameter="{Binding}"
-                                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}"
-                                                    />
-                                        </md:PopupBox>
-
-                                        <!--<Border  
-                                            Grid.RowSpan="2"    
-                                            CornerRadius="3">
-                                          
-                                        </Border>-->
                                         <TextBlock  Padding="5" Text="主任务号："/>
                                         <TextBlock
                                             Padding="65,5"

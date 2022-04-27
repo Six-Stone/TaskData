@@ -25,5 +25,16 @@ namespace TaskData.Services
             var a = await client.ExecuteAsync<QueryDto<T>>(request);
             return a.data.list;
         }
+
+        public async Task<List<T>> GetStuTaskAsync<T>(string id)
+        {
+            BaseRequest request = new()
+            {
+                Method = RestSharp.Method.GET,
+                Route = $"api/SubTask/SearchSubTasks?taskId={id}"
+            };
+            var a = await client.ExecuteAsync<QueryDto<T>>(request);
+            return a.data.list;
+        }
     }
 }

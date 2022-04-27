@@ -9,7 +9,7 @@ namespace TackNo.Shared.Dtos
     /// <summary>
     /// 子任务显示模型
     /// </summary>
-    public class SubTaskViewDto : BaseDto
+    public class SubTaskViewDto
     {
         public string subTaskNo { get; set; }
         public string equipmentNo { get; set; }

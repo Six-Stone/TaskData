@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TaskData.Views"
               mc:Ignorable="d" 
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
-              Width="380" Height="220">
+              Width="500" Height="220">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -17,7 +17,7 @@
         <TextBlock Text="{Binding Title}" d:Text="温馨提示" Padding="5" FontSize="14"/>
 
         <TextBlock Grid.Row="1" Padding="15,0" VerticalAlignment="Center"
-            d:Text="确认操作该该数据吗？" FontSize="14"
+            d:Text="确认操作该数据吗？" FontSize="14"
             Text="{Binding Content}"/>
 
         <StackPanel Margin="10" Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">

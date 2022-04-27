@@ -22,6 +22,8 @@ namespace TaskData.ViewModels
             : base(provider)
         {
             ToDoDtos = new ObservableCollection<TaskViewDto>();
+            SubTask = new ObservableCollection<SubTaskViewDto>();
+            SelectedCommand = new DelegateCommand<TaskViewDto>(Selected);
             //强制完成任务
             DeleteCommand = new DelegateCommand<TaskViewDto>(Delete);
             dialogHost = provider.Resolve<IDialogHostService>();
@@ -34,15 +36,40 @@ namespace TaskData.ViewModels
         {
             try
             {
-                var dialogResult = await dialogHost.Question("温馨提示", $"确认查看任务:{obj.taskNo} ?");
+                var dialogResult = await dialogHost.Question("温馨提示", $"确认查看任务:{obj.id}");
                 if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
 
                 UpdateLoading(true);
-                //var deleteResult = await service.ActionStuTaskNO(obj.subTaskNo);
-                //if (deleteResult!=null)
-                //{
-                //    await dialogHost.Question("温馨提示", $"{obj.subTaskNo}子任务已强制结束！");
-                //}
+            }
+            finally
+            {
+                UpdateLoading(false);
+            }
+        }
+        private async void Selected(TaskViewDto obj)
+        {
+            try
+            {
+                //var dialogResult = await dialogHost.Question("温馨提示", $"确认查看任务:{obj.id}");
+                //if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
+                UpdateLoading(true);
+
+                var todoResult = await service.GetStuTaskAsync<SubTaskViewDto>(obj.id);
+                SubTask.Clear();
+                foreach (var item in todoResult)
+                {
+
+                    //CurrentDto = item;
+                    SubTask.Add(item);
+                }
+
+                
+
+                IsRightDrawerOpen = true;
+            }
+            catch (Exception ex)
+            {
+
             }
             finally
             {
@@ -50,7 +77,7 @@ namespace TaskData.ViewModels
             }
         }
 
-       
+        
 
         private int selectedIndex;
 
@@ -86,6 +113,7 @@ namespace TaskData.ViewModels
             set { isRightDrawerOpen = value; RaisePropertyChanged(); }
         }
         public DelegateCommand<string> ExecuteCommand { get; private set; }
+
         public DelegateCommand<TaskViewDto> SelectedCommand { get; private set; }
         public DelegateCommand<TaskViewDto> DeleteCommand { get; private set; }
 
@@ -98,6 +126,27 @@ namespace TaskData.ViewModels
             set { toDoDtos = value; RaisePropertyChanged(); }
         }
 
+        private ObservableCollection<SubTaskViewDto> subTask;
+
+        /// <summary>
+        /// 选中的值
+        /// </summary>
+        public ObservableCollection<SubTaskViewDto> SubTask
+        {
+            get { return subTask; }
+            set { subTask = value; RaisePropertyChanged(); }
+        }
+
+        private SubTaskViewDto currentDto;
+
+        /// <summary>
+        /// 选中的值
+        /// </summary>
+        public SubTaskViewDto CurrentDto
+        {
+            get { return currentDto; }
+            set { currentDto = value; RaisePropertyChanged(); }
+        }
         /// <summary>
         /// 获取数据
         /// </summary>
@@ -107,13 +156,13 @@ namespace TaskData.ViewModels
 
             var todoResult = await service.GetAllFilterAsync<TaskViewDto>();
 
-           
-                ToDoDtos.Clear();
-                foreach (var item in todoResult)
-                {
-                    ToDoDtos.Add(item);
-                }
-            
+
+            ToDoDtos.Clear();
+            foreach (var item in todoResult)
+            {
+                ToDoDtos.Add(item);
+            }
+
             UpdateLoading(false);
         }
 

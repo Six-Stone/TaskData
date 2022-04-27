@@ -51,12 +51,12 @@ namespace TaskData.Services
             BaseRequest request = new()
             {
                 Method = RestSharp.Method.GET,
-                Route = $"api/{serviceName}/SearchSubTasks?taskId={parameter}"
+                Route = $"api/SubTask/SearchSubTasks?taskId={parameter}"
             };
             return await client.ExecuteAsync<QueryDto<TEntity>>(request);
         }
         //后管四项车子任务查询（根据车号来查询）
-        async Task<ApiResponse<QueryDto<TEntity>>> IBaseService<TEntity>.GetSearchSubTasksCaerNo(int ShuttleNo)
+        async Task<ApiResponse<QueryDto<TEntity>>> IBaseService<TEntity>.GetSearchSubTasksCaerNo(string ShuttleNo)
         {
             BaseRequest request = new()
             {

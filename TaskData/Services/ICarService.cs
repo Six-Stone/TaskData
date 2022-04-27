@@ -7,9 +7,8 @@ using TackNo.Shared.Dtos;
 
 namespace TaskData.Services
 {
-   public interface IToDoService :IBaseService<Queue<TaskViewDto>>
+    public interface ICarService : IBaseService<Queue<CarTaskViewDto>>
     {
-        Task<List<T>> GetAllFilterAsync<T>();
-        Task<List<T>> GetStuTaskAsync<T>(string id);
+        Task<List<T>> GetSearchSubTasksCaerNo<T>(string id);
     }
 }

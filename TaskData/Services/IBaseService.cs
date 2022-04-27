@@ -14,23 +14,15 @@ namespace TaskData.Services
     /// <typeparam name="TEntity"></typeparam>
    public interface IBaseService<TEntity> where TEntity : class
     {
+
         Task<ApiResponse<TEntity>> ActionStuTaskNO(string entity);
         Task<ApiResponse<TEntity>> ActionCaerNO(TEntity entity);
 
-        //Task<ApiResponse<TEntity>> UpdateAsync(TEntity entity);
-
-        //Task<ApiResponse> DeleteAsync(int id);
-
-        //Task<ApiResponse<TEntity>> GetFirstOfDefaultAsync(int id);
         //查询全部
         Task<ApiResponse<QueryDto<TEntity>>> GetAllAsync();
-        /// <summary>
-        /// 条件查询
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
+        // 条件查询
         Task<ApiResponse<QueryDto<TEntity>>> GetStuTaskAsync(string parameter);
-        Task<ApiResponse<QueryDto<TEntity>>> GetSearchSubTasksCaerNo(int ShuttleNo);
+        Task<ApiResponse<QueryDto<TEntity>>> GetSearchSubTasksCaerNo(string ShuttleNo);
         Task<ApiResponse<QueryDto<TEntity>>> GetSearchSubTasksId(string SubTaskId);
     }
 }
