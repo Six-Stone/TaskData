@@ -21,10 +21,41 @@ namespace TaskData.ViewModels
         {
             ToDoDtos = new ObservableCollection<CarTaskViewDto>();
             ExecuteCommand = new DelegateCommand<string>(Execute);
-            //SelectedCommand = new DelegateCommand<ToDoDto>(Selected);
-            //DeleteCommand = new DelegateCommand<ToDoDto>(Delete);
-            //dialogHost = provider.Resolve<IDialogHostService>();
+            DeleteCommand = new DelegateCommand<CarTaskViewDto>(Delete);
+            dialogHost = provider.Resolve<IDialogHostService>();
             this.service = service;
+        }
+        private CarTaskViewDto currentDto;
+
+        /// <summary>
+        /// 编辑选中/新增时对象
+        /// </summary>
+        public CarTaskViewDto CurrentDto
+        {
+            get { return currentDto; }
+            set { currentDto = value; RaisePropertyChanged(); }
+        }
+
+        private async void Delete(CarTaskViewDto obj)
+        {
+            try
+            {
+                var dialogResult = await dialogHost.Question("温馨提示", $"确认补发{obj.shuttleNo} 的任务{obj.commandNo}?");
+                if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
+
+                UpdateLoading(true);
+                var deleteResult = await service.ActionCaerNO(CurrentDto);
+                
+                
+                    //var model = ToDoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
+                    //if (model != null)
+                      //ToDoDtos.Remove(model);
+                
+            }
+            finally
+            {
+                UpdateLoading(false);
+            }
         }
         private readonly ICarService service;
         private ObservableCollection<CarTaskViewDto> toDoDtos;
@@ -33,16 +64,20 @@ namespace TaskData.ViewModels
             get { return toDoDtos; }
             set { toDoDtos = value; RaisePropertyChanged(); }
         }
+        private bool isRightDrawerOpen;
 
-        public DelegateCommand<string> ExecuteCommand { get; private set; }
-        private void Execute(string obj)
+        /// <summary>
+        /// 右侧编辑窗口是否展开
+        /// </summary>
+        public bool IsRightDrawerOpen
         {
-            switch (obj)
-            {
-                case "查询": GetDataAsync(); break;
-            }
+            get { return isRightDrawerOpen; }
+            set { isRightDrawerOpen = value; RaisePropertyChanged(); }
         }
 
+        public DelegateCommand<string> ExecuteCommand { get; private set; }
+
+        public DelegateCommand<CarTaskViewDto> DeleteCommand { get; private set; }
         private string search;
 
         /// <summary>
@@ -53,22 +88,63 @@ namespace TaskData.ViewModels
             get { return search; }
             set { search = value; RaisePropertyChanged(); }
         }
+       
+        private void Execute(string obj)
+        {
+            switch (obj)
+            {
+                case "新增": Add(); break;
+                case "查询": GetDataAsync(); break;
+                case "保存": Save(); break;
+            }
+        }
+        /// <summary>
+        /// 添加待办
+        /// </summary>
+        private void Add()
+        {
+            CurrentDto = new CarTaskViewDto();
+            IsRightDrawerOpen = true;
+        }
+        private async void Save()
+        {
+            if (string.IsNullOrWhiteSpace(CurrentDto.commandNo) ||
+                string.IsNullOrWhiteSpace(CurrentDto.shuttleNo))
+                return;
+
+            UpdateLoading(true);
+
+            try
+            {
+                if (CurrentDto.shuttleNo!=null)
+                {
+                    var updateResult = await service.ActionCaerNO(CurrentDto);
+                    IsRightDrawerOpen = false;
+                }
+              
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                UpdateLoading(false);
+            }
+        }
         async void GetDataAsync()
         {
             UpdateLoading(true);
 
+            string Status = Search;
 
-            var str = Search;
-            var todoResult = await service.GetSearchSubTasksCaerNo<CarTaskViewDto>(str);
-
-
-
+            var todoResult = await service.GetSearchSubTasksCaerNo<CarTaskViewDto>(Status);
             ToDoDtos.Clear();
             foreach (var item in todoResult)
             {
                 ToDoDtos.Add(item);
             }
-
+            //IsRightDrawerOpen = true;
             UpdateLoading(false);
         }
     }

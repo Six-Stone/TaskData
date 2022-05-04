@@ -73,9 +73,10 @@ namespace TaskData.ViewModels
 
         void CreateMenuBar()
         {
-            MenuBars.Add(new MenuBar() { Icon = "Home", Title = "主任务查询", NameSpace = "IndexView" });
+            
             MenuBars.Add(new MenuBar() { Icon = "NotebookOutline", Title = "任务查询", NameSpace = "ToDoView" });
             MenuBars.Add(new MenuBar() { Icon = "NotebookOutline", Title = "四向车任务查询", NameSpace = "SearchSubTasksView" });
+            MenuBars.Add(new MenuBar() { Icon = "Home", Title = "任务操作", NameSpace = "IndexView" });
             MenuBars.Add(new MenuBar() { Icon = "Cog", Title = "设置", NameSpace = "SettingsView" });
         }
         public void Configure()

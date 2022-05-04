@@ -44,7 +44,9 @@ namespace TaskData
 
             
             containerRegistry.Register<IStuTaskNoService, StuTaskNoService>();
+            containerRegistry.Register<ICarService, CarService>();
             containerRegistry.Register<IDialogHostService, DialogHostService>();
+            containerRegistry.RegisterForNavigation<AddToDoView, AddToDoViewModel>();
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
             containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();

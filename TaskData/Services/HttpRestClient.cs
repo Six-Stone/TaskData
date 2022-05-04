@@ -47,7 +47,10 @@ namespace TaskData.Services
             request.AddHeader("Content-Type", baseRequest.ContentType);
 
             if (baseRequest.Parameter != null)
+            {
                 request.AddParameter("param", JsonConvert.SerializeObject(baseRequest.Parameter), ParameterType.RequestBody);
+                //request.AddQueryParameter("subTaskNo", baseRequest.Parameter.ToString());
+            }   
             client.BaseUrl = new Uri(apiUrl + baseRequest.Route);
             var response = await client.ExecuteAsync<ApiResponse<T>>(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)

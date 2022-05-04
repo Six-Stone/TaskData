@@ -15,6 +15,16 @@ namespace TaskData.Services
             this.client = client;
         }
 
+        public async Task<TackNo.Shared.ApiResponse<CarTaskViewDto>> ActionCaerNO(CarTaskViewDto entity)
+        {
+            BaseRequest request = new BaseRequest();
+
+
+            request.Method = RestSharp.Method.POST;
+            request.Route = $"api/SubTaskTest/SendShuttleCommand?commandNo={entity.commandNo}&carNo={entity.shuttleNo}";
+            return await client.ExecuteAsync<CarTaskViewDto>(request);
+        }
+
         public async Task<List<T>> GetSearchSubTasksCaerNo<T>(string id)
         {
             BaseRequest request = new()

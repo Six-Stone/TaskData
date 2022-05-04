@@ -18,93 +18,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition />
+            
         </Grid.RowDefinitions>
         <TextBlock
             Margin="15,10"
             FontSize="22"
             Text="{Binding Title}" />
-
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding TaskBars}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="4" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border
-                        Margin="10"
-                        Background="{Binding Color}"
-                        CornerRadius="5">
-                        <Border.InputBindings>
-                            <MouseBinding MouseAction="LeftClick"
-                                          Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}"
-                                          CommandParameter="{Binding}"/>
-                        </Border.InputBindings>
-
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect
-                                                    BlurRadius="10"
-                                                    ShadowDepth="1"
-                                                    Color="#DDDDDD" />
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                        <Grid>
-                            <StackPanel Margin="20,10">
-                                <materialDesign:PackIcon
-                                    Width="30"
-                                    Height="30"
-                                    Kind="{Binding Icon}" />
-                                <TextBlock
-                                    Margin="0,15"
-                                    FontSize="15"
-                                    Text="{Binding Title}" />
-                                <TextBlock
-                                    FontSize="40"
-                                    FontWeight="Bold"
-                                    Text="{Binding Content}" />
-                            </StackPanel>
-
-                            <Canvas ClipToBounds="True">
-                                <Border
-                                    Canvas.Top="10"
-                                    Canvas.Right="-50"
-                                    Width="120"
-                                    Height="120"
-                                    Background="#FFFFFF"
-                                    CornerRadius="100"
-                                    Opacity="0.1" />
-                                <Border
-                                    Canvas.Top="80"
-                                    Canvas.Right="-30"
-                                    Width="120"
-                                    Height="120"
-                                    Background="#FFFFFF"
-                                    CornerRadius="100"
-                                    Opacity="0.1" />
-                            </Canvas>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
+        
         <Grid Grid.Row="2" Margin="0,10">
-            <Grid.ColumnDefinitions>
+            <!--几列-->
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+             </Grid.ColumnDefinitions>-->
 
             <Border
                 Margin="10,0"
@@ -120,64 +45,19 @@
                     <TextBlock
                         FontSize="20"
                         FontWeight="Bold"
-                        Text="主任务显示" />
-                    <!--<Button  Command="{Binding ExecuteCommand}"
+                        Text="强制完成任务" />
+                    <Button  Command="{Binding ExecuteCommand}"
                              CommandParameter="新增待办"
                         Width="30"
                         Height="30" 
                         VerticalAlignment="Top"
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-                        <materialDesign:PackIcon Kind="Add" />
-                    </Button>-->
+                        <materialDesign:PackIcon Kind="AccountBalance" />
+                    </Button>
                 </DockPanel>
-
-                <ListBox x:Name="todoList"
-                    HorizontalContentAlignment="Stretch"
-                    ItemsSource="{Binding Summary.ToDoList}"
-                    ScrollViewer.VerticalScrollBarVisibility="Hidden">
-
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDoubleClick">
-                            <i:InvokeCommandAction Command="{Binding EditToDoCommand}"
-                                                   CommandParameter="{Binding ElementName=todoList,Path=SelectedItem}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <DockPanel MaxHeight="80" LastChildFill="False">
-                                <ToggleButton DockPanel.Dock="Right"
-                                              IsChecked="{Binding Status,Converter={StaticResource intToBool}}"
-                                              Command="{Binding DataContext.ToDoCompltedCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}"
-                                              CommandParameter="{Binding}"
-                                              />
-                                <StackPanel>
-                                    <TextBlock
-                                        FontSize="16"
-                                        FontWeight="Bold"
-                                        Text="{Binding Title}" />
-                                    <TextBlock
-                                        Margin="0,5"
-                                        Opacity="0.5"
-                                        Text="{Binding Content}" />
-                                </StackPanel>
-                            </DockPanel>
-
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
             </DockPanel>
-
-
-            <Border
-                Grid.Column="1"
-                Margin="10,0"
-                Background="#BEBEBE"
-                CornerRadius="5"
-                Opacity="0.1" />
-
-            <DockPanel Grid.Column="1" Margin="10,0">
+            <DockPanel Margin="10,100" Height="50">
                 <DockPanel
                     Margin="10,5"
                     DockPanel.Dock="Top"
@@ -185,43 +65,17 @@
                     <TextBlock
                         FontSize="20"
                         FontWeight="Bold"
-                        Text="子任务显示" />
-                    <!--<Button
+                        Text="子任务下发" />
+                    <Button  Command="{Binding ExecuteCommand}"
+                             CommandParameter="任务操作"
                         Width="30"
-                        Height="30"
-                        Command="{Binding ExecuteCommand}"
-                             CommandParameter="新增备忘录"
+                        Height="30" 
                         VerticalAlignment="Top"
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-                        <materialDesign:PackIcon Kind="Add" />
-                    </Button>-->
+                        <materialDesign:PackIcon Kind="AccountBalance" />
+                    </Button>
                 </DockPanel>
-
-                <ListBox
-                    x:Name="memoList"
-                    ItemsSource="{Binding Summary.MemoList}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDoubleClick">
-                            <i:InvokeCommandAction Command="{Binding EditMemoCommand}"
-                                                   CommandParameter="{Binding ElementName=memoList,Path=SelectedItem}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel MaxHeight="80">
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Text="{Binding Title}" />
-                                <TextBlock
-                                    Margin="0,5"
-                                    Opacity="0.5"
-                                    Text="{Binding Content}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
             </DockPanel>
         </Grid>
     </Grid>

@@ -22,8 +22,7 @@ namespace TaskData.Services
         {
             BaseRequest request = new();
             request.Method = RestSharp.Method.POST;
-            request.Route = $"api/{serviceName}/ForceFinishSubTask?subTaskNo={entity}";
-            request.Parameter = entity;
+            request.Route = $"api/SubTaskTest/ForceFinishSubTask?subTaskNo={entity}";
             return await client.ExecuteAsync<TEntity>(request);
         }
         //补发四向车任务
@@ -31,8 +30,8 @@ namespace TaskData.Services
         {
             BaseRequest request = new();
             request.Method = RestSharp.Method.POST;
-            request.Route = $"api/{serviceName}/ForceFinishSubTask";
-            request.Parameter = entity;
+            request.Route = $"api/SubTaskTest/SendShuttleCommand?commandNo={entity}&carNo={entity}";
+            
             return await client.ExecuteAsync<TEntity>(request);
         }
         //查询主任务

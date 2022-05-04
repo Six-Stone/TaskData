@@ -14,15 +14,10 @@
     <UserControl.Resources>
         <cv:IntToVisibilityConveter x:Key="IntToVisibility"/>
     </UserControl.Resources>
-    
+
     <md:DialogHost >
-
         <md:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
-
-          
             <md:DrawerHost.RightDrawerContent>
-
-
                 <DockPanel Width="250" LastChildFill="False" >
                     <Grid>
                         <ScrollViewer Grid.Row="1">
@@ -43,12 +38,6 @@
                                                     <RowDefinition Height="auto" />
                                                     <RowDefinition />
                                                 </Grid.RowDefinitions>
-                                                <md:PopupBox HorizontalAlignment="Left" Panel.ZIndex="1">
-                                                    <Button Content="操作" 
-                                                    CommandParameter="{Binding}"
-                                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}"
-                                                    />
-                                                </md:PopupBox>
                                                 <TextBlock  Padding="25,5,0,0" Text="子任务号："/>
                                                 <TextBlock
                                                 Padding="85,5"
@@ -78,7 +67,7 @@
                                                 Grid.Row="1"
                                                 FontWeight="Black"
                                                 Text="{Binding carNo}" />
-                                                <TextBlock  Grid.Row="1" Padding="25,67" Text="小车号："/>
+                                                <TextBlock  Grid.Row="1" Padding="25,67" Text="任务状态："/>
                                                 <TextBlock
                                                 Padding="85,67"
                                                 Grid.Row="1"
