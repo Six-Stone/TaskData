@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TaskData.Views.AddToDoView"
+﻿<UserControl x:Class="TaskData.Views.ConLifeTCHandleView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,12 +15,12 @@
 
         <TextBlock
             Padding="20,10"
-            Text="强制完成子任务操作" FontWeight="Bold" FontSize="20" />
+            Text="强制完成四向车，提升机任务操作" FontWeight="Bold" FontSize="20" />
 
         <DockPanel Grid.Row="1" LastChildFill="False">
             <TextBox
-                Text="{Binding Model.subTaskNo}"
-                Margin="20,0" md:HintAssist.Hint="请输入子任务号" DockPanel.Dock="Top"/>
+                Text="{Binding Model.subTaskNo}"   FontSize="20"
+                Margin="20,5" md:HintAssist.Hint="请输入四向车，提升机任务号" DockPanel.Dock="Top"/>
         </DockPanel>
 
         <StackPanel Margin="10" Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">

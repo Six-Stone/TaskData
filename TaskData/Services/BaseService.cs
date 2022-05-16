@@ -25,6 +25,27 @@ namespace TaskData.Services
             request.Route = $"api/SubTaskTest/ForceFinishSubTask?subTaskNo={entity}";
             return await client.ExecuteAsync<TEntity>(request);
         }
+        /// <summary>
+        /// 四向车上下线
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task<ApiResponse<TEntity>> ShuttleOnOffLine(TEntity entity)
+        {
+            BaseRequest request = new();
+            request.Method = RestSharp.Method.POST;
+            request.Route = $"api/SubTaskTest/ShuttleOnOffLine?shuttleNo={entity}&activeEnum={entity}";
+
+            return await client.ExecuteAsync<TEntity>(request);
+        }
+        //Task<ApiResponse<TEntity>> ConLifeTCHandle(string entity);
+        public async Task<ApiResponse<TEntity>> ConLifeTCHandle(string entity)
+        {
+            BaseRequest request = new();
+            request.Method = RestSharp.Method.POST;
+            request.Route = $"api/SubTaskTest/ConLifeTCHandle?commandNo={entity}";
+            return await client.ExecuteAsync<TEntity>(request);
+        }
         //补发四向车任务
         public async Task<ApiResponse<TEntity>> ActionCaerNO(TEntity entity)
         {
@@ -71,6 +92,16 @@ namespace TaskData.Services
             {
                 Method = RestSharp.Method.GET,
                 Route = $"api/{serviceName}/SearchSubTasks?SubTaskId={parameter}"
+            };
+            return await client.ExecuteAsync<QueryDto<TEntity>>(request);
+        }
+        //根据站点类型来查询站点
+        async Task<ApiResponse<QueryDto<TEntity>>> IBaseService<TEntity>.GetNodeType(string NodeType)
+        {
+            BaseRequest request = new()
+            {
+                Method = RestSharp.Method.GET,
+                Route = $"api/nodeType/SearchTransportNode?nodeType={NodeType}"
             };
             return await client.ExecuteAsync<QueryDto<TEntity>>(request);
         }

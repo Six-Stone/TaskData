@@ -1,0 +1,68 @@
+﻿using MaterialDesignThemes.Wpf;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Services.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TackNo.Shared.Dtos;
+using TaskData.Common;
+
+namespace TaskData.ViewModels
+{
+    public class SubTaskNoViewModel : BindableBase, IDialogHostAware
+    {
+        public SubTaskNoViewModel()
+        {
+            SaveCommand = new DelegateCommand(Save);
+            CancelCommand = new DelegateCommand(Cancel);
+        }
+        private SubTaskViewDto model;
+        /// <summary>
+        /// 新增或编辑的实体
+        /// </summary>
+        public SubTaskViewDto Model
+        {
+            get { return model; }
+            set { model = value; RaisePropertyChanged(); }
+        }
+        /// <summary>
+        /// 取消
+        /// </summary>
+        private void Cancel()
+        {
+            if (DialogHost.IsDialogOpen(DialogHostName))
+                DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.No)); //取消返回NO告诉操作结束
+        }
+
+        /// <summary>
+        /// 确定
+        /// </summary>
+        private void Save()
+        {
+            if (string.IsNullOrWhiteSpace(Model.subTaskNo)) return;
+
+            if (DialogHost.IsDialogOpen(DialogHostName))
+            {
+                //确定时,把编辑的实体返回并且返回OK
+                DialogParameters param = new DialogParameters();
+                param.Add("Value", Model);
+                DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.OK, param));
+            }
+        }
+        public string DialogHostName { get; set; }
+        public DelegateCommand SaveCommand { get; set; }
+        public DelegateCommand CancelCommand { get; set; }
+        public void OnDialogOpend(IDialogParameters parameters)
+        {
+            if (parameters.ContainsKey("Value"))
+            {
+                Model = parameters.GetValue<SubTaskViewDto>("Value");
+            }
+            else
+                Model = new SubTaskViewDto();
+        }
+    }
+}

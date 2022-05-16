@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="TaskData.Views.AddToDoView"
+﻿<UserControl x:Class="TaskData.Views.SiXainCheView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TaskData.Views"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             mc:Ignorable="d"  Width="450" Height="280">
+             mc:Ignorable="d"  Width="450" Height="280" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -15,12 +15,22 @@
 
         <TextBlock
             Padding="20,10"
-            Text="强制完成子任务操作" FontWeight="Bold" FontSize="20" />
+            Text="四向车上下线操作" FontWeight="Bold" FontSize="20" />
 
         <DockPanel Grid.Row="1" LastChildFill="False">
             <TextBox
-                Text="{Binding Model.subTaskNo}"
-                Margin="20,0" md:HintAssist.Hint="请输入子任务号" DockPanel.Dock="Top"/>
+                Text="{Binding Model.ShuttleNo}"
+                Margin="20,0" md:HintAssist.Hint="请输入四向车车号" DockPanel.Dock="Top"/>
+            <StackPanel
+                
+                Margin="20,10"
+                DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBlock Text="状态:" VerticalAlignment="Center"/>
+                <ComboBox Width="90"  md:HintAssist.Hint=" 请选择状态" SelectedIndex="{Binding Model.IsActive}" Margin="10,0,0,0">
+                    <ComboBoxItem>  上线</ComboBoxItem>
+                    <ComboBoxItem>  下线</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
         </DockPanel>
 
         <StackPanel Margin="10" Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">

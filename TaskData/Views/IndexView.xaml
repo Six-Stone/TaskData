@@ -18,7 +18,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <TextBlock
             Margin="15,10"
@@ -36,8 +37,27 @@
                 Background="#BEBEBE"
                 CornerRadius="5"
                 Opacity="0.1" />
-
-            <DockPanel Margin="10,0">
+            <DockPanel Margin="10,10,0,0" >
+                <DockPanel
+                    Margin="10,5"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="下发子任务" />
+                    <Button  Command="{Binding ExecuteCommand}"
+                             CommandParameter="下发子任务"
+                        Width="30"
+                        Height="30" 
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                        <materialDesign:PackIcon Kind="AccountBalance" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+            <DockPanel Margin="10,15,0,0" Height="50">
                 <DockPanel
                     Margin="10,5"
                     DockPanel.Dock="Top"
@@ -47,7 +67,7 @@
                         FontWeight="Bold"
                         Text="强制完成任务" />
                     <Button  Command="{Binding ExecuteCommand}"
-                             CommandParameter="新增待办"
+                             CommandParameter="强制完成子任务"
                         Width="30"
                         Height="30" 
                         VerticalAlignment="Top"
@@ -57,7 +77,7 @@
                     </Button>
                 </DockPanel>
             </DockPanel>
-            <DockPanel Margin="10,100" Height="50">
+            <DockPanel Margin="10,200,0,0" Height="50">
                 <DockPanel
                     Margin="10,5"
                     DockPanel.Dock="Top"
@@ -65,9 +85,9 @@
                     <TextBlock
                         FontSize="20"
                         FontWeight="Bold"
-                        Text="子任务下发" />
+                        Text="强制完成四向车任务" />
                     <Button  Command="{Binding ExecuteCommand}"
-                             CommandParameter="任务操作"
+                             CommandParameter="强制完成四向车任务"
                         Width="30"
                         Height="30" 
                         VerticalAlignment="Top"
@@ -77,6 +97,27 @@
                     </Button>
                 </DockPanel>
             </DockPanel>
+            <DockPanel Margin="10,100,0,0" Height="50">
+                <DockPanel
+                    Margin="10,5"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="四项车上下线" />
+                    <Button  Command="{Binding ExecuteCommand}"
+                             CommandParameter="四项车上下线"
+                        Width="30"
+                        Height="30" 
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                        <materialDesign:PackIcon Kind="AccountBalance" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+            
         </Grid>
     </Grid>
 </UserControl>
