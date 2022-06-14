@@ -12,7 +12,9 @@ using System.Windows;
 using TaskData.Common;
 using TaskData.Services;
 using TaskData.ViewModels;
+using TaskData.ViewModels.PagingViewsModels;
 using TaskData.Views;
+using TaskData.Views.PagingViews;
 
 namespace TaskData
 {
@@ -47,19 +49,21 @@ namespace TaskData
         //验证
         protected override void OnInitialized()
         {
-            //var dialog = Container.Resolve<IDialogService>();
-            //dialog.ShowDialog("LoginView", callback =>
-            //{
-            //    if (callback.Result != ButtonResult.OK)
-            //    {
-            //        Environment.Exit(0);
-            //        return;
-            //    }
-            //});
+            var dialog = Container.Resolve<IDialogService>();
+            dialog.ShowDialog("LoginView", callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+
+            });
             var service = App.Current.MainWindow.DataContext as IConfigureService;
             if (service != null)
                 service.Configure();
             base.OnInitialized();
+
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -76,6 +80,7 @@ namespace TaskData
             containerRegistry.Register<ICarService, CarService>();
             containerRegistry.Register<IGetNodeTypeService, GetNodeTypeService>();
             containerRegistry.Register<IDialogHostService, DialogHostService>();
+            containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
             containerRegistry.RegisterForNavigation<AddToDoView, AddToDoViewModel>();
             containerRegistry.RegisterForNavigation<SiXainCheView, SiXainCheViewModel>();
@@ -88,6 +93,8 @@ namespace TaskData
             containerRegistry.RegisterForNavigation<NodeView, NodeViewModel>();
             containerRegistry.RegisterForNavigation<SubTaskNoView, SubTaskNoViewModel>();
             containerRegistry.RegisterForNavigation<ConLifeTCHandleView, ConLifeTCHandleViewModel>();
+            containerRegistry.RegisterForNavigation<CancelChargeView, CancelChargeViewModel>();
+           
         }
     }
 }

@@ -18,9 +18,13 @@ namespace TaskData.Services
         Task<ApiResponse<TEntity>> ActionStuTaskNO(string entity);
         //四向车上下线
         Task<ApiResponse<TEntity>> ActionCaerNO(TEntity entity);
+        //下发任务
+        Task<ApiResponse<TEntity>> SendSubTask(string entity);
 
-        //强制完成子任务
+        //强制完成四向车，提升机任务
         Task<ApiResponse<TEntity>> ConLifeTCHandle(string entity);
+        //取消四向车充电任务
+        Task<ApiResponse<TEntity>> CancelCharge(string entity);
         //四向车上下线
         Task<ApiResponse<TEntity>> ShuttleOnOffLine(TEntity entity);
         //查询全部
@@ -33,5 +37,7 @@ namespace TaskData.Services
         Task<ApiResponse<QueryDto<TEntity>>> GetSearchSubTasksId(string SubTaskId);
         //根据站点类型来查询站点
         Task<ApiResponse<QueryDto<TEntity>>> GetNodeType(string NodeType);
+        //呼叫大件库托盘
+        Task<ApiResponse<QueryDto<TEntity>>> ConvCallTray();
     }
 }

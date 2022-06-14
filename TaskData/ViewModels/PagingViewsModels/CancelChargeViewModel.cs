@@ -10,22 +10,21 @@ using System.Threading.Tasks;
 using TackNo.Shared.Dtos;
 using TaskData.Common;
 
-namespace TaskData.ViewModels
+namespace TaskData.ViewModels.PagingViewsModels
 {
-    public class AddToDoViewModel : BindableBase, IDialogHostAware
+   public class CancelChargeViewModel : BindableBase, IDialogHostAware
     {
-
-        public AddToDoViewModel()
+        public CancelChargeViewModel()
         {
             SaveCommand = new DelegateCommand(Save);
             CancelCommand = new DelegateCommand(Cancel);
         }
-        private SubTaskViewDto model;
+        private CarTaskViewDto model;
 
         /// <summary>
         /// 新增或编辑的实体
         /// </summary>
-        public SubTaskViewDto Model
+        public CarTaskViewDto Model
         {
             get { return model; }
             set { model = value; RaisePropertyChanged(); }
@@ -44,7 +43,7 @@ namespace TaskData.ViewModels
         /// </summary>
         private void Save()
         {
-            if (string.IsNullOrWhiteSpace(Model.subTaskNo)) return;
+            if (string.IsNullOrWhiteSpace(Model.shuttleNo)) return;
 
             if (DialogHost.IsDialogOpen(DialogHostName))
             {
@@ -61,10 +60,10 @@ namespace TaskData.ViewModels
         {
             if (parameters.ContainsKey("Value"))
             {
-                Model = parameters.GetValue<SubTaskViewDto>("Value");
+                Model = parameters.GetValue<CarTaskViewDto>("Value");
             }
             else
-                Model = new SubTaskViewDto();
+                Model = new CarTaskViewDto();
         }
     }
 }

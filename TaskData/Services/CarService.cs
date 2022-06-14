@@ -14,7 +14,7 @@ namespace TaskData.Services
         {
             this.client = client;
         }
-
+        //补发四向车任务
         public async Task<TackNo.Shared.ApiResponse<CarTaskViewDto>> ActionCaerNO(CarTaskViewDto entity)
         {
             BaseRequest request = new BaseRequest();
@@ -31,6 +31,16 @@ namespace TaskData.Services
             {
                 Method = RestSharp.Method.GET,
                 Route = $"api/ShuttleCommand/SearchSubTasks?ShuttleNo={id}"
+            };
+            var a = await client.ExecuteAsync<QueryDto<T>>(request);
+            return a.data.list;
+        }
+        public async Task<List<T>> GetSearchSubTasksSubTaskId<T>(string SubTaskId)
+        {
+            BaseRequest request = new()
+            {
+                Method = RestSharp.Method.GET,
+                Route = $"api/ShuttleCommand/SearchSubTasks?SubTaskId={SubTaskId}"
             };
             var a = await client.ExecuteAsync<QueryDto<T>>(request);
             return a.data.list;

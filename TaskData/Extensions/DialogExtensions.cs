@@ -72,7 +72,7 @@ namespace TaskData.Extensions
         /// </summary>
         /// <param name="aggregator"></param>
         /// <param name="message"></param>
-        public static void SendMessage(this IEventAggregator aggregator, string message, string filterName = "Main")
+        public static void SendMessage(this IEventAggregator aggregator, string message, string filterName = "Login")
         {
             aggregator.GetEvent<MessageEvent>().Publish(new MessageModel()
             {

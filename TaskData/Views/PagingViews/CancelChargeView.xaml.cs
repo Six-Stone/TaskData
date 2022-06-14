@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Demo
+namespace TaskData.Views.PagingViews
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// CancelChargeView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CancelChargeView : UserControl
     {
-        public MainWindow()
+        public CancelChargeView()
         {
             InitializeComponent();
         }

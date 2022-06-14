@@ -24,5 +24,16 @@ namespace TaskData.Services
 
             return await client.ExecuteAsync<SiXainCheDto>(request);
         }
+
+        //呼叫大件库托盘
+        public async Task<ApiResponse<SiXainCheDto>> ConvCallTray()
+        {
+            BaseRequest request = new()
+            {
+                Method = RestSharp.Method.GET,
+                Route = $"api/SubTaskTest/ConvCallTray"
+            };
+            return await client.ExecuteAsync<SiXainCheDto>(request);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using ImTools;
+using Prism.Commands;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TackNo.Shared.Dtos;
+using Task.NLog;
 using TaskData.Common;
 using TaskData.Extensions;
 using TaskData.Services;
@@ -45,12 +47,12 @@ namespace TaskData.ViewModels
 
                 UpdateLoading(true);
                 var deleteResult = await service.ActionCaerNO(CurrentDto);
-                
-                
-                    //var model = ToDoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
-                    //if (model != null)
-                      //ToDoDtos.Remove(model);
-                
+
+
+                //var model = ToDoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
+                //if (model != null)
+                //ToDoDtos.Remove(model);
+
             }
             finally
             {
@@ -88,7 +90,7 @@ namespace TaskData.ViewModels
             get { return search; }
             set { search = value; RaisePropertyChanged(); }
         }
-       
+
         private void Execute(string obj)
         {
             switch (obj)
@@ -106,6 +108,9 @@ namespace TaskData.ViewModels
             CurrentDto = new CarTaskViewDto();
             IsRightDrawerOpen = true;
         }
+        /// <summary>
+        /// 补发四向车任务
+        /// </summary>
         private async void Save()
         {
             if (string.IsNullOrWhiteSpace(CurrentDto.commandNo) ||
@@ -116,16 +121,18 @@ namespace TaskData.ViewModels
 
             try
             {
-                if (CurrentDto.shuttleNo!=null)
+                if (CurrentDto.shuttleNo != null)
                 {
                     var updateResult = await service.ActionCaerNO(CurrentDto);
+                    //  NLogManager.LogFourWayShuttleMessage.Info("补发四向车任务，任务号：" + CurrentDto.commandNo + "车号：" + currentDto.shuttleNo);
+                    //NLogManager.Info("补发四向车任务，任务号：" + CurrentDto.commandNo + "车号：" + currentDto.shuttleNo);
                     IsRightDrawerOpen = false;
                 }
-              
+
             }
             catch (Exception ex)
             {
-
+                //NLogManager.LogError.Info(ex);
             }
             finally
             {
@@ -139,11 +146,21 @@ namespace TaskData.ViewModels
             string Status = Search;
 
             var todoResult = await service.GetSearchSubTasksCaerNo<CarTaskViewDto>(Status);
+            //var StuId = todoResult;
+            var IdStu = string.Join("",todoResult.Select(p=>p.subTaskId).Distinct().ToList());
+            LogHelp.WriteLog("StuTaskId:" + Status+"车辆");
+            //NLogManager.Info("StuTaskId:"+IdStu);
+            var Str = await service.GetSearchSubTasksSubTaskId<CarTaskViewDto>(IdStu);
+
             ToDoDtos.Clear();
-            foreach (var item in todoResult)
+            foreach (var x in Str)
             {
-                ToDoDtos.Add(item);
+                ToDoDtos.Add(x);
             }
+
+
+
+
             //IsRightDrawerOpen = true;
             UpdateLoading(false);
         }

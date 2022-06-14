@@ -26,17 +26,17 @@
             FontSize="22"
             Text="{Binding Title}" />
         
-        <Grid Grid.Row="2" Margin="0,10">
+        <Grid Grid.Row="2" Margin="0,0">
             <!--几列-->
             <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition />
              </Grid.ColumnDefinitions>-->
 
             <Border
-                Margin="10,0"
+                Margin="10,0,0,0"
                 Background="#BEBEBE"
                 CornerRadius="5"
-                Opacity="0.1" />
+                Opacity="0.1" RenderTransformOrigin="0.383,0.505" />
             <DockPanel Margin="10,10,0,0" >
                 <DockPanel
                     Margin="10,5"
@@ -45,7 +45,7 @@
                     <TextBlock
                         FontSize="20"
                         FontWeight="Bold"
-                        Text="下发子任务" />
+                        Text="下发子任务" Height="224" Width="124" />
                     <Button  Command="{Binding ExecuteCommand}"
                              CommandParameter="下发子任务"
                         Width="30"
@@ -57,7 +57,7 @@
                     </Button>
                 </DockPanel>
             </DockPanel>
-            <DockPanel Margin="10,15,0,0" Height="50">
+            <DockPanel Margin="10,66,0,134" Height="50">
                 <DockPanel
                     Margin="10,5"
                     DockPanel.Dock="Top"
@@ -65,7 +65,7 @@
                     <TextBlock
                         FontSize="20"
                         FontWeight="Bold"
-                        Text="强制完成任务" />
+                        Text="强制完成任务" Width="136" />
                     <Button  Command="{Binding ExecuteCommand}"
                              CommandParameter="强制完成子任务"
                         Width="30"
@@ -97,7 +97,7 @@
                     </Button>
                 </DockPanel>
             </DockPanel>
-            <DockPanel Margin="10,100,0,0" Height="50">
+            <DockPanel Margin="10,300,0,0" Height="50">
                 <DockPanel
                     Margin="10,5"
                     DockPanel.Dock="Top"
@@ -105,9 +105,9 @@
                     <TextBlock
                         FontSize="20"
                         FontWeight="Bold"
-                        Text="四项车上下线" />
+                        Text="呼叫大件库托盘" />
                     <Button  Command="{Binding ExecuteCommand}"
-                             CommandParameter="四项车上下线"
+                             CommandParameter="呼叫大件库托盘"
                         Width="30"
                         Height="30" 
                         VerticalAlignment="Top"
@@ -117,7 +117,46 @@
                     </Button>
                 </DockPanel>
             </DockPanel>
-            
+            <DockPanel Margin="10,122,0,78" Height="50">
+                <DockPanel
+                    Margin="10,5"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="四项车上下线" Width="159" />
+                    <Button  Command="{Binding ExecuteCommand}"
+                             CommandParameter="四项车上下线"
+                        Width="30"
+                        Height="30" 
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                        <materialDesign:PackIcon Kind="AccountBalance" HorizontalAlignment="Center" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+            <DockPanel Margin="10,120,0,0" Height="50">
+                <DockPanel
+                    Margin="10,5"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="取消四向车充电任务" Width="199" />
+                    <Button  Command="{Binding ExecuteCommand}"
+                             CommandParameter="取消四向车充电任务"
+                        Width="30"
+                        Height="30" 
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                        <materialDesign:PackIcon Kind="AccountBalance" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
         </Grid>
     </Grid>
 </UserControl>
